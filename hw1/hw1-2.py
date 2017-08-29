@@ -27,14 +27,16 @@ hour_sales_dict = dict()
 country_expense_dict = dict()
 
 #3
+headers = []
+all_rows = []
 
 for row in spamreader:
   total_number_of_rows += 1
   if total_number_of_rows == 1:
     #header
+    headers = row
     continue
   invoice_no,stock_code,description,quantity,invoice_date,unit_price,customer_id,country = row
-  
   #1.b
   stock_code_set.add(stock_code)
   if stock_code == '20685' : unit_cost_array_for_20685.append(unit_price)
@@ -53,6 +55,9 @@ for row in spamreader:
     country_expense_dict[country] += total
   else:
     country_expense_dict[country] = total
+  
+  #3
+  all_rows.append(row)
 
 #1.a
 total_number_of_rows -= 1
@@ -65,6 +70,15 @@ for country in country_expense_dict:
   if total_speding > 50000:
     filtered_country_expense_dict[country] = total_speding
 
+
+#3
+np_all_rows = np.array(all_rows)
+np.random.shuffle(np_all_rows)
+split_at_row = len(np_all_rows) / 2
+first_half_rows = np_all_rows[:split_at_row]
+second_half_rows = np_all_rows[split_at_row:]
+
+#Print for pdf
 print("1")
 print("\t(a) total_number_of_rows is " + str(total_number_of_rows))
 
@@ -89,4 +103,26 @@ plt.ylabel('Total Spent $')
 plt.title('The amount spent by residents of each country > $50,000')
 plt.savefig('hw1-2.c.png')
 
+
+print("3")
+print("\tgenerate csvs")
+output_1 = "output-1.csv"
+output_1_file = open(output_1,"wb")
+output_1_file.write(",".join(headers))
+output_1_file.write("\n")
+for x,row in enumerate(first_half_rows):
+  output_1_file.write(",".join(row))
+  if x != len(first_half_rows) - 1:
+    output_1_file.write("\n")
+output_1_file.close()
+
+output_2 = "output-2.csv"
+output_2_file = open(output_2,"wb")
+output_2_file.write(",".join(headers))
+output_2_file.write("\n")
+for x,row in enumerate(second_half_rows):
+  output_2_file.write(",".join(row))
+  if x != len(second_half_rows) - 1:
+    output_2_file.write("\n")
+output_2_file.close()
 csvfile.close()
