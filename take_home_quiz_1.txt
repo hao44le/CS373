@@ -1,0 +1,6 @@
+For each place which we are interested in, there is a graph that shows the average temperature, the fossil fuel usage,  the deforestation area and amount of CO2. If the above claim is correct, the we will see a high positive correlation between the raise of the average temperature and human activities such as fossil fuel and deforestation. We can also aggregate all the places into a single graph, and observe the overall pattern to avoid some randonmess in the data point.
+
+For each patient which we are interest in, there is a graph that shows the amount of Aspirin used by patient vs patient’s chance of getting a cancer. If the above claim is true, we will witness a high negative correlation between the amount of Aspirin used by patient and patient’s chance of getting a cancer. We can aggregate all the patient’s information into a single graph to observe the overall pattern.
+
+There is a graph that shows the amount of household chores finished by a particular father and the likelihood  of his daughters choosing a less traditionally feminine occupation.  If the above claim is true, we will find that when fathers help half of household chores, their daughters will less likely to do traditional feminine occupations.
+
