@@ -56,15 +56,38 @@ plt.savefig('hw1_3.comic_ECCDF_plot.png')
 marvel_characters_txt = "Marvel-data/marvelCharacters.csv"
 characters_name_dict = read_csv_and_fill_dict(marvel_characters_txt)
 
+#3.b) (i)
+quill_character_id = 0
 for character_id in characters_name_dict:
   #print("{0}: {1}".format(character_id,characters_name_dict[character_id]))
-  break
+  #break
+  if characters_name_dict[character_id] == 'QUILL':
+    quill_character_id = character_id
+    break
+
+print("\tquill_character_id:{0}".format(quill_character_id))
+quill_appearance_array = []
+for character_id in character_comic_dict:
+  if character_id == quill_character_id:
+    quill_appearance_array = character_comic_dict[character_id]
+print("\tb.(i) QUILL appear in {0} distinct comic books".format(len(quill_appearance_array)))
+
+
+#3.b (ii)
+comic_character_dict = dict()
+most_characters = 0
+most_character_comic_id = 0
+for character_id in character_comic_dict:
+  for comic in character_comic_dict[character_id]:
+    if comic not in comic_character_dict:
+      comic_character_dict[comic] = [character_id]
+    else:
+      comic_character_dict[comic].append(character_id)
+    if len(comic_character_dict[comic]) > most_characters:
+      most_characters = len(comic_character_dict[comic])
+      most_character_comic_id = comic
 
 marvel_comicBooks_txt = "Marvel-data/marvelComicBooks.csv"
 comic_name_dict = read_csv_and_fill_dict(marvel_comicBooks_txt)
-
-for comic_id in comic_name_dict:
-  #print("{0}: {1}".format(comic_id,comic_name_dict[comic_id]))
-  break
-
-print("number of unique characters : {0}".format(total_number_of_unique_characters))
+most_character_comic_book_name = comic_name_dict[most_character_comic_id]
+print("\tb.(ii) comic book that has the most number of characters is {0}. Its id is {1} with {2} # of characters".format(most_character_comic_book_name,most_character_comic_id,most_characters))
