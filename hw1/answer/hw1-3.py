@@ -4,6 +4,7 @@ mpl.use('Agg')
 label_size = 8
 mpl.rcParams['xtick.labelsize'] = label_size
 import matplotlib.pyplot as plt
+import numpy
 
 def read_csv_and_fill_dict(csv_name,multiple_value=False):
   csvfile = open(csv_name,'rb')
@@ -65,7 +66,7 @@ for character_id in characters_name_dict:
     quill_character_id = character_id
     break
 
-print("\tquill_character_id:{0}".format(quill_character_id))
+#print("\tquill_character_id:{0}".format(quill_character_id))
 quill_appearance_array = []
 for character_id in character_comic_dict:
   if character_id == quill_character_id:
@@ -91,3 +92,25 @@ marvel_comicBooks_txt = "Marvel-data/marvelComicBooks.csv"
 comic_name_dict = read_csv_and_fill_dict(marvel_comicBooks_txt)
 most_character_comic_book_name = comic_name_dict[most_character_comic_id]
 print("\tb.(ii) comic book that has the most number of characters is {0}. Its id is {1} with {2} # of characters".format(most_character_comic_book_name,most_character_comic_id,most_characters))
+
+#Q3 (b) (iii)
+number_of_rows = 0
+for character in characters_name_dict:
+  number_of_rows = max(number_of_rows,int(character))
+
+number_of_columns = 0
+for comic in comic_name_dict:
+  number_of_columns = max(number_of_columns,int(comic))
+
+character_comic_appearance_array = numpy.zeros(shape=(number_of_rows,number_of_columns))
+print(character_comic_appearance_array.shape)
+
+for character in character_comic_dict:
+  for comic in character_comic_dict[character]:
+    character_comic_appearance_array[int(character)-1][int(comic)-1] += 1
+
+transpose_character_comic_appearance_array = numpy.transpose(character_comic_appearance_array)
+print(transpose_character_comic_appearance_array.shape)
+
+final_result_w = numpy.dot(character_comic_appearance_array,transpose_character_comic_appearance_array)
+print(final_result_w)
