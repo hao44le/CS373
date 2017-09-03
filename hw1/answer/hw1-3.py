@@ -98,7 +98,6 @@ number_of_rows = len(characters_name_dict)
 number_of_columns = len(comic_name_dict)
 character_comic_appearance_array = numpy.zeros(shape=(number_of_rows,number_of_columns))
 print(character_comic_appearance_array.shape)
-
 character_id_to_array_index_mapping = dict()
 for index,character_id in enumerate(characters_name_dict):
   character_id_to_array_index_mapping[character_id] = index
@@ -113,8 +112,11 @@ for character in character_comic_dict:
     comic_index = comic_id_to_array_index_mapping[comic]
     character_comic_appearance_array[character_index][comic_index] += 1
 
+print(numpy.sum(character_comic_appearance_array))
 transpose_character_comic_appearance_array = numpy.transpose(character_comic_appearance_array)
 print(transpose_character_comic_appearance_array.shape)
-
+print(numpy.sum(transpose_character_comic_appearance_array))
+print(transpose_character_comic_appearance_array)
 final_result_w = numpy.dot(character_comic_appearance_array,transpose_character_comic_appearance_array)
 print(final_result_w)
+
