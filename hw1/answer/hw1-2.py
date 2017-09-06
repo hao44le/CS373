@@ -18,7 +18,8 @@ total_number_of_rows = 0
 stock_code_set = set()
 
 #2.a
-unit_cost_array_for_20685 = []
+total_cost_array_for_20685 = 0.0
+total_items_for_20685 = 0
 
 #2.b
 hour_sales_dict = dict()
@@ -39,7 +40,9 @@ for row in spamreader:
   invoice_no,stock_code,description,quantity,invoice_date,unit_price,customer_id,country = row
   #1.b
   stock_code_set.add(stock_code)
-  if stock_code == '20685' : unit_cost_array_for_20685.append(unit_price)
+  if stock_code == '20685' :
+    total_items_for_20685 += int(quantity)
+    total_cost_array_for_20685 += int(quantity) * float(unit_price)
   
   #2.b
   date = datetime.datetime.strptime(invoice_date, "%m/%d/%y %H:%M")
@@ -83,9 +86,7 @@ print("Q2 (1) (a) total_number_of_rows is " + str(total_number_of_rows))
 
 print("Q2 (1) (b) number_of_unique_items based on unique stock code are " + str(len(stock_code_set)))
 
-np_array = np.array(unit_cost_array_for_20685).astype(np.float)
-unit_cost_array_20685 = np.mean(np_array)
-print("Q2 (2) (a) average unit price for the product with stock code 20685 is {0}".format(unit_cost_array_20685))
+print("Q2 (2) (a) average unit price for the product with stock code 20685 is {0}".format(total_cost_array_for_20685 / total_items_for_20685))
 
 max_hour = max(hour_sales_dict, key=hour_sales_dict.get)
 max_quantity_at_max_hour = hour_sales_dict[max_hour]

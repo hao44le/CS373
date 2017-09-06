@@ -110,7 +110,7 @@ for character in character_comic_dict:
   character_index = character_id_to_array_index_mapping[character]
   for comic in character_comic_dict[character]:
     comic_index = comic_id_to_array_index_mapping[comic]
-    character_comic_appearance_array[character_index][comic_index] += 1
+    character_comic_appearance_array[character_index][comic_index] = 1
 
 transpose_character_comic_appearance_array = numpy.transpose(character_comic_appearance_array)
 final_result_w = numpy.dot(character_comic_appearance_array,transpose_character_comic_appearance_array)
