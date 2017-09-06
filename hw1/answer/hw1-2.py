@@ -79,22 +79,20 @@ first_half_rows = np_all_rows[:split_at_row]
 second_half_rows = np_all_rows[split_at_row:]
 
 #Print for pdf
-print("1")
-print("\t(a) total_number_of_rows is " + str(total_number_of_rows))
+print("Q2 (1) (a) total_number_of_rows is " + str(total_number_of_rows))
 
-print("\t(b) number_of_unique_items based on unique stock code are " + str(len(stock_code_set)))
+print("Q2 (1) (b) number_of_unique_items based on unique stock code are " + str(len(stock_code_set)))
 
-print("2")
 np_array = np.array(unit_cost_array_for_20685).astype(np.float)
 unit_cost_array_20685 = np.mean(np_array)
-print("\t(a) average unit price for the product with stock code 20685 is {0}".format(unit_cost_array_20685))
+print("Q2 (2) (a) average unit price for the product with stock code 20685 is {0}".format(unit_cost_array_20685))
 
 max_hour = max(hour_sales_dict, key=hour_sales_dict.get)
 max_quantity_at_max_hour = hour_sales_dict[max_hour]
-print("\t(b) hour in the day are most items sold in the given data set is {0} and the maximum quantity is {1}".format(max_hour,max_quantity_at_max_hour))
+print("Q2 (2) (b) hour in the day are most items sold in the given data set is {0} and the maximum quantity is {1}".format(max_hour,max_quantity_at_max_hour))
 
 
-print("\t(c) generate bar graph using {0}".format(filtered_country_expense_dict))
+print("Q2 (2) (c) generate bar graph using {0}".format(filtered_country_expense_dict))
 plt.bar(range(len(filtered_country_expense_dict)), filtered_country_expense_dict.values(), align='center')
 plt.xticks(range(len(filtered_country_expense_dict)), list(filtered_country_expense_dict.keys()))
 plt.grid(True)
@@ -104,8 +102,7 @@ plt.title('The amount spent by residents of each country > $50,000')
 plt.savefig('hw1-2.c.png')
 
 
-print("3")
-print("\tgenerate csvs")
+#Code to generate Question 2 item (3) csv
 output_1 = "output-1.csv"
 output_1_file = open(output_1,"wb")
 output_1_file.write(",".join(headers))

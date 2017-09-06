@@ -71,7 +71,7 @@ quill_appearance_array = []
 for character_id in character_comic_dict:
   if character_id == quill_character_id:
     quill_appearance_array = character_comic_dict[character_id]
-print("\tb.(i) QUILL appear in {0} distinct comic books".format(len(quill_appearance_array)))
+print("Q3 (b) (i) QUILL appear in {0} distinct comic books".format(len(quill_appearance_array)))
 
 
 #3.b (ii)
@@ -91,7 +91,7 @@ for character_id in character_comic_dict:
 marvel_comicBooks_txt = "Marvel-data/marvelComicBooks.csv"
 comic_name_dict = read_csv_and_fill_dict(marvel_comicBooks_txt)
 most_character_comic_book_name = comic_name_dict[most_character_comic_id]
-print("\tb.(ii) comic book that has the most number of characters is {0}. Its id is {1} with {2} # of characters".format(most_character_comic_book_name,most_character_comic_id,most_characters))
+print("Q3 (b) (ii) comic book that has the most number of characters is {0}. Its id is {1} with {2} # of characters".format(most_character_comic_book_name,most_character_comic_id,most_characters))
 
 #Q3 (b) (iii)
 number_of_rows = len(characters_name_dict)
@@ -112,12 +112,7 @@ for character in character_comic_dict:
     comic_index = comic_id_to_array_index_mapping[comic]
     character_comic_appearance_array[character_index][comic_index] += 1
 
-#print(numpy.sum(character_comic_appearance_array))
 transpose_character_comic_appearance_array = numpy.transpose(character_comic_appearance_array)
-#print(transpose_character_comic_appearance_array.shape)
-#print(character_comic_appearance_array.shape)
-#print(numpy.sum(transpose_character_comic_appearance_array))
-#print(transpose_character_comic_appearance_array)
 final_result_w = numpy.dot(character_comic_appearance_array,transpose_character_comic_appearance_array)
-print("\tb.(iii): \n\t{0}".format(final_result_w))
+print("Q3 (b) (iii): \n{0}".format(final_result_w))
 
