@@ -46,8 +46,9 @@ n10 = X10.shape[0]
 N = 500
 
 for sigma in [1.0, 10.0, 100.0]:
-    sampled_mu1000 = np.random.normal(n1000, sigma, N)
-    sampled_mu10 = np.random.normal(n10, sigma, N)
+    sigma_sqaure = sigma * sigma
+    sampled_mu1000 = np.random.normal((10+sum_X1000/sigma_sqaure) / (1+7/sigma_sqaure), np.sqrt((10+sum_X1000/sigma_sqaure) / ((1+7/sigma_sqaure) ** -1)), N)
+    sampled_mu10 = np.random.normal((10+sum_X10/sigma_sqaure) / (1+7/sigma_sqaure), np.sqrt((10+sum_X10/sigma_sqaure) / ((1+7/sigma_sqaure) ** -1)), N)
 
     greater_tmp = sampled_mu1000 > sampled_mu10
     total_1000_ge_10 = np.sum(greater_tmp)
