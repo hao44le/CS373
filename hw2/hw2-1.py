@@ -26,29 +26,29 @@ print("Empirical probability P[mu_1000 > mu_10 | Data] =", float(
 # a.1
 std_sample_mu1000 = np.std(sampled_mu1000)
 std_sample_mu10 = np.std(sampled_mu10)
-print("(a)(1)std_sample_mu1000:{}".format(std_sample_mu1000))
-print("(a)(1)std_sample_mu10:{}".format(std_sample_mu10))
+print(std_sample_mu1000)
+print(std_sample_mu10)
 std_x1000 = np.std(X1000)
 std_x10 = np.std(X10)
-print("(a)(1)std_x1000:{}".format(std_x1000))
-print("(a)(1)std_x10:{}".format(std_x10))
+print(std_x1000)
+print(std_x10)
 
 
 # c.1
-X1000 = np.random.normal(10, 1, 7)
-X10 = np.random.normal(10, 1, 7)
 
-sum_X1000 = np.sum(X1000)
-n1000 = X1000.shape[0]
-sum_X10 = np.sum(X10)
-n10 = X10.shape[0]
-
-N = 500
-
+mu_zero = 10
+sigema_zero = 1
+variance_zero = sigema_zero ** 2
 for sigma in [1.0, 10.0, 100.0]:
     sigma_sqaure = sigma * sigma
-    sampled_mu1000 = np.random.normal((10+sum_X1000/sigma_sqaure) / (1+7/sigma_sqaure), np.sqrt((10+sum_X1000/sigma_sqaure) / ((1+7/sigma_sqaure) ** -1)), N)
-    sampled_mu10 = np.random.normal((10+sum_X10/sigma_sqaure) / (1+7/sigma_sqaure), np.sqrt((10+sum_X10/sigma_sqaure) / ((1+7/sigma_sqaure) ** -1)), N)
+    
+    mu_X1000 = (mu_zero/variance_zero + sum_X1000/sigma_sqaure) / (1/variance_zero + n1000/sigma_sqaure)
+    sig_X1000 = (1+n1000/sigma_sqaure) ** -1
+    sampled_mu1000 = np.random.normal(mu_X1000, sig_X1000, N)
+    
+    mu_X10 = (mu_zero/variance_zero + sum_X10/sigma_sqaure) / (1/variance_zero + n10/sigma_sqaure)
+    sig_X10 = (1+n10/sigma_sqaure) ** -1
+    sampled_mu10 = np.random.normal(mu_X10, sig_X10, N)
 
     greater_tmp = sampled_mu1000 > sampled_mu10
     total_1000_ge_10 = np.sum(greater_tmp)
