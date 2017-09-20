@@ -1,10 +1,15 @@
 import urllib.request
 import numpy as np
+import matplotlib as mpl
+mpl.use('Agg')
+label_size = 8
+mpl.rcParams['xtick.labelsize'] = label_size
+import matplotlib.pyplot as plt
 
 my_url = "https://www.cs.purdue.edu/homes/ribeirob/courses/Fall2017/data/airpollution.csv"
 
-local_filename, headers = urllib.request.urlretrieve(my_url)
-
+# local_filename, headers = urllib.request.urlretrieve(my_url)
+local_filename = "airpollution.csv"
 with open(local_filename) as in_file:
     number_of_lines = 0
     matrix_x = []
@@ -29,10 +34,26 @@ with open(local_filename) as in_file:
 
     #a
     w, v = np.linalg.eig(matrix_s)
+    # print("eigenvalues:\n\t{}\n".format(w))
+    # print("eigenvectors:\n\t{}\n".format(v))
     w_absolute = np.absolute(w)
     w_absolute_sort = -np.sort(-w_absolute)
     for e_w in w_absolute_sort:
         print(e_w)
 
     #b
+    plt.plot(w_absolute_sort)
+    plt.title('Eigenvalues')
+    plt.savefig('hw2-2-(b).png')
+    # print(matrix_x)
+    np_matrix_x = np.array(matrix_x,dtype=float)
+    variance_of_matrix_x = np.var(np_matrix_x,axis=0)
+    print("variance of different column in original csv:\n\t{}\n".format(variance_of_matrix_x))
+    sum_of_variance_of_matrix_x = np.sum(variance_of_matrix_x)
+    variance_percantage = 100 * variance_of_matrix_x / sum_of_variance_of_matrix_x
+    print("variance percentage:\n\t{}\n".format(variance_percantage))
+
+
+
+    #c
     
