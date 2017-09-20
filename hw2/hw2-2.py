@@ -45,7 +45,8 @@ with open(local_filename) as in_file:
         x_j_transpose = np.transpose(x_j)
         dot_product = np.dot(x_j,x_j_transpose)
         matrix_s = np.add(matrix_s,dot_product)
-
+    matrix_s = matrix_s / 41
+    
     #a
     w, v = np.linalg.eig(matrix_s)
     w_absolute = np.absolute(w)
