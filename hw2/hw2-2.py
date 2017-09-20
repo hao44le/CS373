@@ -27,15 +27,13 @@ with open(local_filename) as in_file:
     #to compute the matrix_s
     matrix_s = np.zeros((6,6))
     for x_j in matrix_x:
-        x_j = np.array([x_j],dtype=float)
+        x_j = np.array([x_j],dtype=float).reshape(6,1)
         x_j_transpose = np.transpose(x_j)
-        dot_product = np.multiply(x_j,x_j_transpose)
+        dot_product = np.dot(x_j,x_j_transpose)
         matrix_s = np.add(matrix_s,dot_product)
 
     #a
     w, v = np.linalg.eig(matrix_s)
-    # print("eigenvalues:\n\t{}\n".format(w))
-    # print("eigenvectors:\n\t{}\n".format(v))
     w_absolute = np.absolute(w)
     w_absolute_sort = -np.sort(-w_absolute)
     for e_w in w_absolute_sort:
@@ -45,7 +43,6 @@ with open(local_filename) as in_file:
     plt.plot(w_absolute_sort)
     plt.title('Eigenvalues')
     plt.savefig('hw2-2-(b).png')
-    # print(matrix_x)
     np_matrix_x = np.array(matrix_x,dtype=float)
     variance_of_matrix_x = np.var(np_matrix_x,axis=0)
     print("variance of different column in original csv:\n\t{}\n".format(variance_of_matrix_x))
@@ -56,4 +53,11 @@ with open(local_filename) as in_file:
 
 
     #c
-    
+    matrix_m = np_matrix_x.mean(axis=0)
+    matrix_theta = np.zeros(6)
+    for index,column in enumerate(np_matrix_x.T):
+        index_sum = 0
+        for x_i_j in column:
+            index_sum += np.power(x_i_j-matrix_m[index],2)
+        matrix_theta[index] = np.sqrt(index_sum)
+    print(matrix_theta)
