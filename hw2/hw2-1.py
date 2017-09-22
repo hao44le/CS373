@@ -53,4 +53,4 @@ for sigma in [1.0, 10.0, 100.0]:
     greater_tmp = sampled_mu1000 > sampled_mu10
     total_1000_ge_10 = np.sum(greater_tmp)
 
-    print("Empirical probability P[mu_1000 > mu_10 | Data] =", float(total_1000_ge_10) / N)
+    print(float(total_1000_ge_10) / N)
