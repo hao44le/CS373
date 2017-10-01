@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 
 my_url = "https://www.cs.purdue.edu/homes/ribeirob/courses/Fall2017/data/airpollution.csv"
 
-#local_filename, headers = urllib.request.urlretrieve(my_url)
-local_filename = "airpollution.csv"
+local_filename, headers = urllib.request.urlretrieve(my_url)
+#local_filename = "airpollution.csv"
 with open(local_filename) as in_file:
     number_of_lines = 0
     matrix_x = []
@@ -62,11 +62,11 @@ with open(local_filename) as in_file:
     plt.gcf().clear()
 
     variance_of_matrix_x = np.var(np_matrix_x,axis=0)
-    print("variance of different column in original csv:\n\t{}\n".format(variance_of_matrix_x))
+    #print("variance of different column in original csv:\n\t{}\n".format(variance_of_matrix_x))
     sum_of_variance_of_matrix_x = np.sum(variance_of_matrix_x)
     variance_percantage = 100 * variance_of_matrix_x / sum_of_variance_of_matrix_x
-    print("variance percentage:\n\t{}\n".format(variance_percantage))
-    print("sum_of_variance_of_matrix_x:{}".format(sum_of_variance_of_matrix_x))
+    #print("variance percentage:\n\t{}\n".format(variance_percantage))
+    #print("sum_of_variance_of_matrix_x:{}".format(sum_of_variance_of_matrix_x))
 
     #c
     matrix_u_1 = np.array([v[:,0]]).reshape(6,1)
