@@ -147,3 +147,4 @@ for i in range(test_size):
 zero_one_loss = (np.array(y_pred == y_test).sum())/(test_size)
 print("ZERO-ONE LOSS={}".format(zero_one_loss))
 squard_loss = (123)/(test_size)
+print("SQUARED LOSS={}".format(squard_loss))
