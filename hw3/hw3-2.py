@@ -3,7 +3,8 @@ import sys
 
 training_file_name = sys.argv[1]
 testing_file_name = sys.argv[2]
-
+print("training_file_name {}".format(training_file_name))
+print("testing_file_name {}".format(testing_file_name))
 line_number = 0
 
 #1.d
