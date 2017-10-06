@@ -101,3 +101,18 @@ for j in range(d):
             numerator = sum(in_class_c == x) + numerator_factor
             denominator = len(in_class_c) + len(possible_values[j])
             feature_probs[j,c][x] = numerator / denominator
+
+#Read testing files
+line_number = 0
+testing_data = []
+with open(testing_file_name) as in_file:
+    for line in in_file.readlines():
+        line_number += 1
+        line = line.strip()
+        if line_number == 1:
+            #header.skip
+            continue
+        else:
+            [goodForGroups,city,state,_,_,stars,_,_,is_open,alcohol,noiseLevel,attire,priceRange,delivery,waiterService,smoking,outdoorSeating,caters,goodForKids] = line.split(",")
+            testing_data.append([goodForGroups,city,state,stars,is_open,alcohol,noiseLevel,attire,priceRange,delivery,waiterService,smoking,outdoorSeating,caters,goodForKids])
+testing_np_array = np.array(testing_data)
