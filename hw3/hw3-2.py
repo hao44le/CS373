@@ -3,8 +3,7 @@ import sys
 
 training_file_name = sys.argv[1]
 testing_file_name = sys.argv[2]
-print("training_file_name {}".format(training_file_name))
-print("testing_file_name {}".format(testing_file_name))
+
 line_number = 0
 
 #1.d
@@ -26,7 +25,7 @@ raw_data = []
 with open(training_file_name) as in_file:
     for line in in_file.readlines():
         line_number += 1
-        line = line.strip()
+        line = line.strip().lower()
         if line_number == 1:
             #header.skip
             continue
@@ -104,15 +103,14 @@ for j in range(d):
             numerator = sum(in_class_c == x) + numerator_factor
             denominator = len(in_class_c) + len(possible_values[j])
             feature_probs[j, c][x] = numerator / denominator
-print(feature_probs[0,'1'])
-print(feature_probs[0,'0'])
+
 #Read testing files
 line_number = 0
 testing_data = []
 with open(testing_file_name) as in_file:
     for line in in_file.readlines():
         line_number += 1
-        line = line.strip()
+        line = line.strip().lower()
         if line_number == 1:
             #header.skip
             continue
@@ -122,8 +120,7 @@ with open(testing_file_name) as in_file:
 testing_np_array = np.array(testing_data)
 X_test = testing_np_array[:,1:]
 y_test = testing_np_array[:,0]
-print("X_test:{}".format(X_test.shape))
-print("y_test:{}".format(y_test.shape))
+
 #testing
 test_size = len(X_test)
 y_pred = []
