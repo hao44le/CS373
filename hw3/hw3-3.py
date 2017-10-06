@@ -77,7 +77,10 @@ def testing(m_testing_data,classes,class_probs,feature_probs,possible_values):
             if posterior_prob[c] >= posterior_prob[y_max]:
                 y_max = c
         y_pred.append(y_max)
-        y_pred_pro.append(posterior_prob[y_max])
+        sum_prob = 0.0
+        for v in posterior_prob:
+            sum_prob += posterior_prob[v]
+        y_pred_pro.append(posterior_prob[y_max]/sum_prob)
     return y_pred,y_pred_pro,y_test
 
 def report_stat(y_pred,y_test,y_pred_pro):
