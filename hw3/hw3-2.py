@@ -76,7 +76,9 @@ with open(training_file_name) as in_file:
 
 #2
 np_array = np.array(raw_data)
-n = len(np_array)
+X_train = np_array[:, 1:]
+d = X_train.shape[1]
+n = X_train.shape[0]
 
 #Laplace smoothing
 numerator_factor = 1
@@ -89,9 +91,6 @@ for c in classes:
     class_probs[c] = (np.array(y_train == c).sum() + numerator_factor) / (n + len(classes))
 
 # calculate the feature probabilities given the calsses
-X_train = np_array[:, 1:]
-d = X_train.shape[1]
-
 possible_values = [set(X_train[:, feature]) for feature in range(d)]
 feature_probs = {(j, c): {v: 0 for v in possible_values[j]}
                  for c in classes for j in range(d)}
