@@ -148,7 +148,8 @@ for i in range(test_size):
 #Calculate stats
 zero_one_loss = (np.array(y_pred == y_test).sum())/(test_size)
 print("ZERO-ONE LOSS={}".format(zero_one_loss))
-squard_loss = (123)/(test_size)
+sum_of_prob = 0.0
 for pro in y_pred_pro:
-    print(pro)
+    sum_of_prob += (1-pro)*(1-pro)
+squard_loss = (sum_of_prob)/(test_size)
 print("SQUARED LOSS={}".format(squard_loss))
