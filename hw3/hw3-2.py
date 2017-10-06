@@ -133,6 +133,7 @@ for i in range(test_size):
         for j in range(d):
             x = X_test[i, j]
             if x not in feature_probs[j, c]:
+                # Smoothing for unseen features
                 posterior_prob[c] *= (numerator_factor / len(possible_values[j]))
             else:
                 posterior_prob[c] *= feature_probs[j, c][x]
