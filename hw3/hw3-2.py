@@ -92,7 +92,7 @@ for c in classes:
 
 # calculate the feature probabilities given the calsses
 possible_values = [set(X_train[:, feature]) for feature in range(d)]
-print(possible_values[0])
+
 feature_probs = {(j, c): {v: 0 for v in possible_values[j]}
                  for c in classes for j in range(d)}
 for j in range(d):
