@@ -120,9 +120,11 @@ with open(testing_file_name) as in_file:
 testing_np_array = np.array(testing_data)
 X_test = testing_np_array[:,1:]
 y_test = testing_np_array[:,0]
-
+print("X_test:{}".format(X_test.shape))
+print("y_test:{}".format(y_test.shape))
 #testing
 test_size = len(X_test)
+
 y_pred = []
 for i in range(test_size):
     posterior_prob = {c:0 for c in classes}
