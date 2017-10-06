@@ -1,8 +1,8 @@
-import urllib.request
 import numpy as np
-my_url = "https://www.cs.purdue.edu/homes/ribeirob/courses/Fall2017/data/yelp2_train.csv"
-# local_filename, headers = urllib.request.urlretrieve(my_url)
-local_filename = "yelp2_train.csv"
+import sys
+
+training_file_name = sys.argv[1]
+testing_file_name = sys.argv[2]
 
 line_number = 0
 
@@ -22,7 +22,7 @@ all_dict = {'priceRange_dict':priceRange_dict,'alcohol_dict':alcohol_dict,'noise
 #2
 raw_data = []
 
-with open(local_filename) as in_file:
+with open(training_file_name) as in_file:
     for line in in_file.readlines():
         line_number += 1
         line = line.strip()
