@@ -77,6 +77,7 @@ def testing(m_testing_data,classes,class_probs,feature_probs,possible_values):
             if posterior_prob[c] >= posterior_prob[y_max]:
                 y_max = c
         y_pred.append(y_max)
+        print(posterior_prob)
         y_pred_pro.append(posterior_prob[y_max])
     return y_pred,y_pred_pro,y_test
 
