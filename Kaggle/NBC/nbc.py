@@ -13,10 +13,16 @@ for row in info:
     line_number += 1
     if line_number == 1:
         continue
-    raw_data.append(row[1:-1])
+    feature = row[1:6] #Amount Requested	Amount Funded By Investors	Interest Rate	Loan Length	CREDIT Grade
+    feature.append(row[8])#Monthly PAYMENT
+    feature.append(row[9])#Total Amount Funded
+    feature.append(row[10])#Debt-To-Income Ratio
+    feature.append(row[14])#Monthly Income
+    raw_data.append(feature)
+    print(feature)
     raw_target.append(row[-1])
 # 2
-
+print(len(raw_data))
 np_data = np.array(raw_data)
 
 from sklearn import preprocessing
@@ -37,7 +43,12 @@ for row in info:
     line_number += 1
     if line_number == 1:
         continue
-    test_data.append(row[1:-1])
+    feature = row[1:6] #Amount Requested	Amount Funded By Investors	Interest Rate	Loan Length	CREDIT Grade
+    feature.append(row[8])#Monthly PAYMENT
+    feature.append(row[9])#Total Amount Funded
+    feature.append(row[10])#Debt-To-Income Ratio
+    feature.append(row[14])#Monthly Income
+    test_data.append(feature)
     raw_output.append(row)
 
 test_data = np.array(test_data)
