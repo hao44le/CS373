@@ -143,5 +143,7 @@ for i in range(test_size):
             y_max = c
     y_pred.append(y_max)
 
-from sklearn.metrics import classification_report
-print(classification_report(y_test,y_pred))
+#Calculate stats
+zero_one_loss = (np.array(y_pred == y_test).sum())/(test_size)
+print("ZERO-ONE LOSS={}".format(zero_one_loss))
+squard_loss = (123)/(test_size)
