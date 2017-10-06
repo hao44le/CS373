@@ -1,4 +1,5 @@
 import urllib.request
+import numpy as np
 my_url = "https://www.cs.purdue.edu/homes/ribeirob/courses/Fall2017/data/yelp2_train.csv"
 # local_filename, headers = urllib.request.urlretrieve(my_url)
 local_filename = "yelp2_train.csv"
@@ -19,7 +20,7 @@ attire_dict = {'':[0,0],'dressy':[0,0],'casual':[0,0],'formal':[0,0]}
 all_dict = {'priceRange_dict':priceRange_dict,'alcohol_dict':alcohol_dict,'noiseLevel_dict':noiseLevel_dict,'attire_dict':attire_dict}
 
 #2
-prior_count_dict = {'0':0,'1':0}
+raw_data = []
 
 with open(local_filename) as in_file:
     for line in in_file.readlines():
@@ -60,7 +61,7 @@ with open(local_filename) as in_file:
                 attire_dict[attire] = [attire_dict[attire][0],attire_dict[attire][1]+1]
 
             #2
-            prior_count_dict[goodForGroups] += 1
+            raw_data.append([goodForGroups,city,state,stars,is_open,alcohol,noiseLevel,attire,priceRange,delivery,waiterService,smoking,outdoorSeating,caters,goodForKids])
 
 #1.d
 # total_number_of_distinct_values = 0
@@ -74,5 +75,29 @@ with open(local_filename) as in_file:
 #     print("{}:{}".format(key,all_dict[key]))
 
 #2
-for prior_count in prior_count_dict:
-    print("P({})=:{}".format(prior_count,prior_count_dict[prior_count] / float(line_number)))
+np_array = np.array(raw_data)
+n = len(np_array)
+
+#Laplace smoothing
+numerator_factor = 1
+
+# calculate the class distirbution
+class_probs = {}
+y_train = np_array[:,0]
+classes = np.unique(y_train)
+for c in classes:
+    class_probs[c] = (np.array(y_train == c).sum() + numerator_factor) / (n + len(classes))
+
+# calculate the feature probabilities given the calsses
+X_train = np_array[:, 1:]
+d = X_train.shape[1]
+possible_values = [set(X_train[:,feature]) for feature in range(d)]
+feature_probs = {(j,c): {v:0 for v in possible_values[j]}
+                for c in classes for j in range(d)}
+for j in range(d):
+    for c in classes:
+        in_class_c = X_train[y_train == c,j]
+        for x in possible_values[j]:
+            numerator = sum(in_class_c == x) + numerator_factor
+            denominator = len(in_class_c) + len(possible_values[j])
+            feature_probs[j,c][x] = numerator / denominator
