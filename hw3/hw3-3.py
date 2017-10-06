@@ -90,14 +90,27 @@ def report_stat(y_pred,y_test,y_pred_pro):
         sum_of_prob += (1-pro)*(1-pro)
     squard_loss = (sum_of_prob)/(test_size)
     print("SQUARED LOSS={}".format(squard_loss))
+    return zero_one_loss,squard_loss
 
 training_file_name = "yelp2_train.csv"
 raw_data = read_data(training_file_name)
-# without random split
-class_probs,feature_probs,classes,d,possible_values = training(raw_data)
+raw_data = np.array(raw_data)
 
-#Read testing files
-testing_data = read_data("yelp3.csv")
+per_arr = [0.01,0.1,0.5]
+for percent in per_arr:
+    print(percent)
+    zero_one_loss_arr = np.zeros(10,)
+    squard_loss_arr = np.zeros(10,)
+    for i in range(0,10):
+        print("\t{}".format(i))
+        np.random.shuffle(raw_data)
+        training_percent = int(len(raw_data) * percent)
+        training_data, testing_data = raw_data[:training_percent], raw_data[training_percent:]
 
-y_pred,y_pred_pro,y_test = testing(testing_data,classes,class_probs,feature_probs,possible_values)
-report_stat(y_pred,y_test,y_pred_pro)
+        class_probs,feature_probs,classes,d,possible_values = training(raw_data)
+        y_pred,y_pred_pro,y_test = testing(testing_data,classes,class_probs,feature_probs,possible_values)
+        zero_one_loss,squard_loss = report_stat(y_pred,y_test,y_pred_pro)
+        zero_one_loss_arr[i] = zero_one_loss
+        squard_loss_arr[i] = squard_loss
+    print("mean of zero_one_loss_arr:{}".format(np.mean(zero_one_loss_arr)))
+    print("mean of squard_loss_arr:{}".format(np.mean(squard_loss_arr)))
