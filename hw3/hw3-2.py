@@ -103,7 +103,8 @@ for j in range(d):
             numerator = sum(in_class_c == x) + numerator_factor
             denominator = len(in_class_c) + len(possible_values[j])
             feature_probs[j, c][x] = numerator / denominator
-
+print(feature_probs[0,'1']['NELLIS AFB'])
+print(feature_probs[0,'0']['NELLIS AFB'])
 #Read testing files
 line_number = 0
 testing_data = []
