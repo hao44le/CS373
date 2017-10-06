@@ -25,7 +25,7 @@ raw_data = []
 with open(training_file_name) as in_file:
     for line in in_file.readlines():
         line_number += 1
-        line = line.strip().lower()
+        line = line.strip()
         if line_number == 1:
             #header.skip
             continue
@@ -81,7 +81,7 @@ d = X_train.shape[1]
 n = X_train.shape[0]
 
 #Laplace smoothing
-numerator_factor = 1
+numerator_factor = 1.0
 
 # calculate the class distirbution
 class_probs = {}
@@ -110,7 +110,7 @@ testing_data = []
 with open(testing_file_name) as in_file:
     for line in in_file.readlines():
         line_number += 1
-        line = line.strip().lower()
+        line = line.strip()
         if line_number == 1:
             #header.skip
             continue
@@ -120,7 +120,6 @@ with open(testing_file_name) as in_file:
 testing_np_array = np.array(testing_data)
 X_test = testing_np_array[:,1:]
 y_test = testing_np_array[:,0]
-
 #testing
 test_size = len(X_test)
 y_pred = []
@@ -133,7 +132,10 @@ for i in range(test_size):
         posterior_prob[c] = class_probs[c]
         for j in range(d):
             x = X_test[i, j]
-            posterior_prob[c] *= feature_probs[j, c][x]
+            if x not in feature_probs[j, c]:
+                posterior_prob[c] *= (numerator_factor / len(possible_values[j]))
+            else:
+                posterior_prob[c] *= feature_probs[j, c][x]
 
         # Update which class has the max posterior
         if posterior_prob[c] >= posterior_prob[y_max]:
