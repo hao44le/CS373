@@ -131,7 +131,8 @@ for i in range(test_size):
             x = X_test[i,j]
             posterior_prob[c] *= feature_probs[j,c][x]
 
-        if posterior_prob[c] >= posterior_prob[y_max]: y_max = c
+        if posterior_prob[c] >= posterior_prob[y_max]:
+            y_max = c
     y_pred.append(y_max)
 
 
