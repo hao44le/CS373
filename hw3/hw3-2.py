@@ -132,7 +132,7 @@ for i in range(test_size):
             posterior_prob[c] *= feature_probs[j,c][x]
 
         if posterior_prob[c] >= posterior_prob[y_max]: y_max = c
-    y_pred.append[y_max]
+    y_pred.append(y_max)
 
 
 from sklearn.metrics import classification_report
