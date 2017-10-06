@@ -123,6 +123,7 @@ y_test = testing_np_array[:,0]
 #testing
 test_size = len(X_test)
 y_pred = []
+y_pred_pro = []
 for i in range(test_size):
     posterior_prob = {c: 0 for c in classes}
     y_max = classes[0]
@@ -142,9 +143,12 @@ for i in range(test_size):
         if posterior_prob[c] >= posterior_prob[y_max]:
             y_max = c
     y_pred.append(y_max)
+    y_pred_pro.append(posterior_prob[y_max])
 
 #Calculate stats
 zero_one_loss = (np.array(y_pred == y_test).sum())/(test_size)
 print("ZERO-ONE LOSS={}".format(zero_one_loss))
 squard_loss = (123)/(test_size)
+for pro in y_pred_pro:
+    print(pro)
 print("SQUARED LOSS={}".format(squard_loss))
