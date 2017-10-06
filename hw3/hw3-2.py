@@ -124,22 +124,22 @@ print("X_test:{}".format(X_test.shape))
 print("y_test:{}".format(y_test.shape))
 #testing
 test_size = len(X_test)
-
 y_pred = []
 for i in range(test_size):
-    posterior_prob = {c:0 for c in classes}
+    posterior_prob = {c: 0 for c in classes}
     y_max = classes[0]
 
     for c in classes:
+        # Compute the posterior prob. for class c
         posterior_prob[c] = class_probs[c]
         for j in range(d):
-            x = X_test[i,j]
-            posterior_prob[c] *= feature_probs[j,c][x]
+            x = X_test[i, j]
+            posterior_prob[c] *= feature_probs[j, c][x]
 
+        # Update which class has the max posterior
         if posterior_prob[c] >= posterior_prob[y_max]:
             y_max = c
     y_pred.append(y_max)
-
 
 from sklearn.metrics import classification_report
 print(classification_report(y_test,y_pred))
