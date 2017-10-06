@@ -146,7 +146,7 @@ for i in range(test_size):
     y_pred_pro.append(posterior_prob[y_max])
 
 #Calculate stats
-zero_one_loss = (np.array(y_pred == y_test).sum())/(test_size)
+zero_one_loss = (np.array(y_pred != y_test).sum())/(test_size)
 print("ZERO-ONE LOSS={}".format(zero_one_loss))
 sum_of_prob = 0.0
 for pro in y_pred_pro:
