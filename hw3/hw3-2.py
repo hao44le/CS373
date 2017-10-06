@@ -116,3 +116,25 @@ with open(testing_file_name) as in_file:
             [goodForGroups,city,state,_,_,stars,_,_,is_open,alcohol,noiseLevel,attire,priceRange,delivery,waiterService,smoking,outdoorSeating,caters,goodForKids] = line.split(",")
             testing_data.append([goodForGroups,city,state,stars,is_open,alcohol,noiseLevel,attire,priceRange,delivery,waiterService,smoking,outdoorSeating,caters,goodForKids])
 testing_np_array = np.array(testing_data)
+X_test = testing_np_array[:,1:]
+y_test = testing_np_array[:,0]
+
+#testing
+test_size = len(X_test)
+y_pred = []
+for i in range(test_size):
+    posterior_prob = {c:0 for c in classes}
+    y_max = classes[0]
+
+    for c in classes:
+        posterior_prob[c] = class_probs[c]
+        for j in range(d):
+            x = X_test[i,j]
+            posterior_prob[c] *= feature_probs[j,c][x]
+
+        if posterior_prob[c] >= posterior_prob[y_max]: y_max = c
+    y_pred.append[y_max]
+
+
+from sklearn.metrics import classification_report
+print(classification_report(y_test,y_pred))
