@@ -93,7 +93,8 @@ X_train = np_array[:, 1:]
 d = X_train.shape[1]
 
 possible_values = [set(X_train[:, feature]) for feature in range(d)]
-feature_probs = {(j,c): {v:0 for v in possible_values[j]} for c in classes for j in range(d)}
+feature_probs = {(j, c): {v: 0 for v in possible_values[j]} 
+                 for c in classes for j in range(d)}
 for j in range(d):
     for c in classes:
         in_class_c = X_train[y_train == c,j]
