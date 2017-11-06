@@ -48,7 +48,10 @@ data.info()
 # Column Unnamed : 32 holds only null values, so it is of no use to us. We simply drop that column.
 data.drop("Loan Title",axis=1,inplace=True)
 data.drop("Loan ID", axis=1, inplace=True)
-
+data.drop("Education",axis=1,inplace=True)
+data.drop("Earliest CREDIT Line",axis=1,inplace=True)
+data.drop("City",axis=1,inplace=True)
+data.drop("State",axis=1,inplace=True)
 
 # In[7]:
 
@@ -61,14 +64,13 @@ data.columns
 # Select the columns to use for prediction in the neural network
 prediction_var = ['Amount Requested', 'Amount Funded By Investors', 'Interest Rate',
        'Loan Length', 'CREDIT Grade', 'Loan Purpose', 'Monthly PAYMENT',
-       'Total Amount Funded', 'Debt-To-Income Ratio', 'City', 'State',
-       'Home Ownership', 'Monthly Income', 'FICO Range',
-       'Earliest CREDIT Line', 'OpenCREDITLines', 'Total CREDIT Lines',
+       'Total Amount Funded', 'Debt-To-Income Ratio',
+       'Home Ownership', 'Monthly Income', 'FICO Range', 'OpenCREDITLines', 'Total CREDIT Lines',
        'Revolving CREDIT Balance', 'Revolving Line Utilization',
        'Inquiries in the Last 6 Months', 'Accounts Now Delinquent',
        'Delinquent Amount', 'Delinquencies (Last 2 yrs)',
        'Months Since Last Delinquency', 'Public Records On File',
-       'Months Since Last Record', 'Education', 'Employment Length']
+       'Months Since Last Record', 'Employment Length']
 X = data[prediction_var]
 Y = data.Status.values
 
@@ -87,7 +89,7 @@ encoded_Y = encoder.transform(Y)
 def create_baseline():
     # create model
     model = Sequential()
-    model.add(Dense(10, input_dim=28, kernel_initializer='normal', activation='relu'))
+    model.add(Dense(10, input_dim=len(prediction_var), kernel_initializer='normal', activation='relu'))
     model.add(Dense(1, kernel_initializer='normal', activation='sigmoid'))
     # Compile model. We use the the logarithmic loss function, and the Adam gradient optimizer.
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
@@ -137,9 +139,9 @@ checkpointer = ModelCheckpoint(filepath='saved_models/weights.best.from_scratch.
 
 estimators = []
 estimators.append(('standardize', StandardScaler()))
-estimators.append(('mlp', KerasClassifier(build_fn=create_baseline, epochs=30, batch_size=5, verbose=1)))
+estimators.append(('mlp', KerasClassifier(build_fn=create_baseline, epochs=10, batch_size=5, verbose=1)))
 pipeline = Pipeline(estimators)
-kfold = StratifiedKFold(n_splits=10, shuffle=True)
+kfold = StratifiedKFold(n_splits=3, shuffle=True)
 print(kfold)
 results = cross_val_score(pipeline, X, encoded_Y, cv=kfold)
 print("Results: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
