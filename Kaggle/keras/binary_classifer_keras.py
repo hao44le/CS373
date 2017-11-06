@@ -7,7 +7,6 @@
 import numpy
 import pandas as pd
 import matplotlib.pyplot as plt
-get_ipython().magic('matplotlib inline')
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
