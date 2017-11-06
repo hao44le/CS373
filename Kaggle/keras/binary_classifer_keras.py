@@ -88,28 +88,12 @@ encoded_Y = encoder.transform(Y)
 # Baseline model for the neural network. We choose a hidden layer of 10 neurons. The lesser number of neurons helps to eliminate the redundancies in the data and select the more important features.
 def create_baseline():
     # create model
-    # model = Sequential()
-    # model.add(Dense(10, input_dim=len(prediction_var), kernel_initializer='normal', activation='relu'))
-    # model.add(Dense(1, kernel_initializer='normal', activation='sigmoid'))
-    # # Compile model. We use the the logarithmic loss function, and the Adam gradient optimizer.
-    # model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-    # return model
-
-
     model = Sequential()
-    model.add(Conv2D(filters=16, kernel_size=2, padding='same', activation='relu',
-                            input_shape=(len(X), len(prediction_var))))
-    model.add(MaxPooling2D(pool_size=2))
-    model.add(Conv2D(filters=32, kernel_size=2, padding='same', activation='relu'))
-    model.add(MaxPooling2D(pool_size=2))
-    model.add(Conv2D(filters=64, kernel_size=2, padding='same', activation='relu'))
-    model.add(MaxPooling2D(pool_size=2))
-    model.add(Dropout(0.3))
-    model.add(Flatten())
-    model.add(Dense(500, activation='relu'))
+    model.add(Dense(10, input_dim=len(prediction_var), kernel_initializer='normal', activation='relu'))
     model.add(Dropout(0.4))
-    model.add(Dense(10, activation='softmax'))
-
+    model.add(Dense(1, kernel_initializer='normal', activation='sigmoid'))
+    # Compile model. We use the the logarithmic loss function, and the Adam gradient optimizer.
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     model.summary()
     return model
 
