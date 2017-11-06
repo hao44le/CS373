@@ -4,7 +4,7 @@
 # In[1]:
 
 # Import libraries for data wrangling, preprocessing and visualization
-import numpy 
+import numpy
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -17,7 +17,7 @@ from sklearn.pipeline import Pipeline
 
 # Importing libraries for building the neural network
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score
@@ -88,11 +88,29 @@ encoded_Y = encoder.transform(Y)
 # Baseline model for the neural network. We choose a hidden layer of 10 neurons. The lesser number of neurons helps to eliminate the redundancies in the data and select the more important features.
 def create_baseline():
     # create model
+    # model = Sequential()
+    # model.add(Dense(10, input_dim=len(prediction_var), kernel_initializer='normal', activation='relu'))
+    # model.add(Dense(1, kernel_initializer='normal', activation='sigmoid'))
+    # # Compile model. We use the the logarithmic loss function, and the Adam gradient optimizer.
+    # model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    # return model
+
+
     model = Sequential()
-    model.add(Dense(10, input_dim=len(prediction_var), kernel_initializer='normal', activation='relu'))
-    model.add(Dense(1, kernel_initializer='normal', activation='sigmoid'))
-    # Compile model. We use the the logarithmic loss function, and the Adam gradient optimizer.
-    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.add(Conv2D(filters=16, kernel_size=2, padding='same', activation='relu',
+                            input_shape=(len(X), len(prediction_var))))
+    model.add(MaxPooling2D(pool_size=2))
+    model.add(Conv2D(filters=32, kernel_size=2, padding='same', activation='relu'))
+    model.add(MaxPooling2D(pool_size=2))
+    model.add(Conv2D(filters=64, kernel_size=2, padding='same', activation='relu'))
+    model.add(MaxPooling2D(pool_size=2))
+    model.add(Dropout(0.3))
+    model.add(Flatten())
+    model.add(Dense(500, activation='relu'))
+    model.add(Dropout(0.4))
+    model.add(Dense(10, activation='softmax'))
+
+    model.summary()
     return model
 
 
@@ -132,9 +150,9 @@ encoded_Y.shape
 
 # In[17]:
 
-# Evaluate model using standardized dataset. 
+# Evaluate model using standardized dataset.
 from keras.callbacks import ModelCheckpoint
-checkpointer = ModelCheckpoint(filepath='saved_models/weights.best.from_scratch.hdf5', 
+checkpointer = ModelCheckpoint(filepath='saved_models/weights.best.from_scratch.hdf5',
                                verbose=1, save_best_only=True)
 
 estimators = []
@@ -148,6 +166,3 @@ print("Results: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
 
 
 # In[ ]:
-
-
-
