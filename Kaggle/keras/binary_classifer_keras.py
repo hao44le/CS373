@@ -7,10 +7,7 @@
 import numpy
 import pandas as pd
 import matplotlib.pyplot as plt
-try:
-    from sklearn.model_selection import train_test_split
-except:
-    from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
@@ -26,10 +23,10 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score
 
 
-# In[3]:
+# In[4]:
 
 # Read data file
-data = pd.read_csv("data.csv", header=0)
+data = pd.read_csv("Loan_Training.csv", header=0)
 seed = 5
 numpy.random.seed(seed)
 
@@ -49,8 +46,8 @@ data.info()
 # In[7]:
 
 # Column Unnamed : 32 holds only null values, so it is of no use to us. We simply drop that column.
-data.drop("Unnamed: 32",axis=1,inplace=True)
-data.drop("id", axis=1, inplace=True)
+#data.drop("Unnamed: 32",axis=1,inplace=True)
+#data.drop("id", axis=1, inplace=True)
 
 
 # In[8]:
@@ -62,17 +59,19 @@ data.columns
 # In[9]:
 
 # Select the columns to use for prediction in the neural network
-prediction_var = ['radius_mean', 'texture_mean', 'perimeter_mean',
-       'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean',
-       'concave points_mean', 'symmetry_mean', 'fractal_dimension_mean',
-       'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'smoothness_se',
-       'compactness_se', 'concavity_se', 'concave points_se', 'symmetry_se',
-       'fractal_dimension_se', 'radius_worst', 'texture_worst',
-       'perimeter_worst', 'area_worst', 'smoothness_worst',
-       'compactness_worst', 'concavity_worst', 'concave points_worst',
-       'symmetry_worst', 'fractal_dimension_worst']
+prediction_var = ['Loan ID', 'Amount Requested', 'Amount Funded By Investors',
+       'Interest Rate', 'Loan Length', 'CREDIT Grade', 'Loan Title',
+       'Loan Purpose', 'Monthly PAYMENT', 'Total Amount Funded',
+       'Debt-To-Income Ratio', 'City', 'State', 'Home Ownership',
+       'Monthly Income', 'FICO Range', 'Earliest CREDIT Line',
+       'Open CREDIT Lines', 'Total CREDIT Lines', 'Revolving CREDIT Balance',
+       'Revolving Line Utilization', 'Inquiries in the Last 6 Months',
+       'Accounts Now Delinquent', 'Delinquent Amount',
+       'Delinquencies (Last 2 yrs)', 'Months Since Last Delinquency',
+       'Public Records On File', 'Months Since Last Record', 'Education',
+       'Employment Length']
 X = data[prediction_var].values
-Y = data.diagnosis.values
+Y = data.Status.values
 
 
 # In[10]:
@@ -106,3 +105,6 @@ pipeline = Pipeline(estimators)
 kfold = StratifiedKFold(n_splits=10, shuffle=True)
 results = cross_val_score(pipeline, X, encoded_Y, cv=kfold)
 print("Results: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
+
+
+# In[ ]:
