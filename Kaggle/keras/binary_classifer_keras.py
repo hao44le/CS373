@@ -131,9 +131,13 @@ encoded_Y.shape
 # In[17]:
 
 # Evaluate model using standardized dataset. 
+from keras.callbacks import ModelCheckpoint
+checkpointer = ModelCheckpoint(filepath='saved_models/weights.best.from_scratch.hdf5', 
+                               verbose=1, save_best_only=True)
+
 estimators = []
 estimators.append(('standardize', StandardScaler()))
-estimators.append(('mlp', KerasClassifier(build_fn=create_baseline, epochs=3, batch_size=5, verbose=1)))
+estimators.append(('mlp', KerasClassifier(build_fn=create_baseline, epochs=30, batch_size=5, verbose=1)))
 pipeline = Pipeline(estimators)
 kfold = StratifiedKFold(n_splits=10, shuffle=True)
 print(kfold)
