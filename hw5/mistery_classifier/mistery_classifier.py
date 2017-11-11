@@ -13,23 +13,23 @@ def isfloat(value):
     return False
 
 def float_or_str(x):
-	if isfloat(x):
-		return (x)
-	else:
-		return (-1)
+    if isfloat(x):
+        return (x)
+    else:
+        return (-1)
 
 
 def percent_to_float(x):
-	if isfloat(x):
-		return (x/100)
-	else:
-		return float(x.strip('%'))/100
+    if isfloat(x):
+        return (x/100)
+    else:
+        return float(x.strip('%'))/100
 
 def add_noise(x):
-	if not isinstance(x, string_types):
-		return (x + np.random.normal(loc=0.0, scale=1e-3))
-	else:
-		return (x)
+    if not isinstance(x, string_types):
+        return (x + np.random.normal(loc=0.0, scale=1e-3))
+    else:
+        return (x)
 
 class MisteryClassifier:
     def __init__(self,nWL,tdp=1):
@@ -37,9 +37,9 @@ class MisteryClassifier:
         self.weights = []
         self.nWL = nWL
         self.tdp = tdp
-	
+
     def fit(self,X,y):
-		# input: dataset X and labels y (in {+1, -1})
+        # input: dataset X and labels y (in {+1, -1})
         N = X.shape[0]
         w = np.ones(N) / N
 
@@ -99,18 +99,18 @@ data_train, target_train = data_processing(train_file)
 data_validation, target_validation = data_processing(validation_file)
 
 for train_size in train_sizes:
-    
+
     f1score_validation = 0
     f1score_train = 0
-    
+
     for avg_run in range(0,3):
 
         dt_index = np.random.choice(len(target_train), train_size)
         data_train_1 = data_train[dt_index,]
         target_train_1 = np.array(target_train)[dt_index]
-        
+
         print("Train size",train_size," run ",avg_run)
-    
+
         # Describe classifier and regularization type
         misteryCl = MisteryClassifier(nWL = 2000, tdp=1)
         misteryCl.fit(X=data_train_1, y=target_train_1)
@@ -122,7 +122,7 @@ for train_size in train_sizes:
         f1score_validation += f1_score(target_validation, y_pred_validation)/3.
 
         f1score_train += f1_score(target_train_1, y_pred_train_1)/3.
-        
+
     F1_scores_validation.append(f1score_validation)
     F1_scores_train.append(f1score_train)
 
